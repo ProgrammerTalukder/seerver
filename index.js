@@ -77,8 +77,8 @@ async function run(){
             const cart = await cursor.toArray();
             res.send(cart);
         })
-        app.get('/order/user',async(req, res)=>{
-            const email=req.query.user;
+        app.get('/order/:users',async(req, res)=>{
+            const email=req.params.users;
             console.log(email)
             const query = {user: email};
             console.log(query)
@@ -124,18 +124,18 @@ async function run(){
             console.log("deleting scart deleted", id)
             res.json(result)
         })
-        app.delete('/order/product', async (req, res)=>{
-            const key = req.query.product;
+        app.delete('/order/:email/:keys', async (req, res)=>{
+            const key = req.params.keys;
             console.log(key)
-            const user = req.query.user;
+            const user = req.params.email;
             console.log(user)
             const query = {key : key, user : user}
             const result = await orderCollection.deleteMany( query )
             console.log("deleting cart deleted", key)
             res.json(result)
         })
-        app.delete('/watches/product', async (req, res)=>{
-            const id = req.query.id;
+        app.delete('/watches/product/:id', async (req, res)=>{
+            const id = req.params.id;
             console.log(id)
             const query = {_id: ObjectId(id)}
             const result = await watchCollection.deleteOne( query )
